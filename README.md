@@ -1,1 +1,1 @@
-# Blogify
+# Blogify - A blog app
