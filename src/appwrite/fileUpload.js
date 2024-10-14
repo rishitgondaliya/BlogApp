@@ -14,35 +14,37 @@ export class fileUploadService {
     this.profileBucket = new Storage(this.client);
   }
 
-  async uploadBlogImage(blogImg) {
+  async uploadFile(file) {
     try {
         return await this.blogBucket.createFile(
             conf.appwriteBlogImageBucketID,
             ID.unique(),
-            blogImg
-        )
+            file
+        );
     } catch (error) {
         console.log("Appwrite service :: uploadBlogImg :: error ", error);   
+        return false;
     }
   }
 
-  async deleteBlogImage(imgID) {
+  async deleteFile(fileID) {
     try {
         await this.blogBucket.deleteFile(
             conf.appwriteBlogImageBucketID,
-            imgID
-        )
-        return true
+            fileID
+        );
+        return true;
     } catch (error) {
         console.log("Appwrite service :: deleteBlogImg :: error ", error);
+        return false;
     }
   }
 
-  getImgPreview(imgID) {
+  getFilePreview(fileID) {
     return this.blogBucket.getFilePreview(
         conf.appwriteBlogImageBucketID,
-        imgID
-    )
+        fileID
+    );
   }
 }
 
