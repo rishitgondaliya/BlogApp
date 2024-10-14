@@ -1,59 +1,70 @@
-import { Container, Logo, LogoutBtn } from "../index"
-import { Link, useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { Container, Logo } from '../index'
+import { Link, NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status)
-  // const navigate = useNavigate()
+
   const navItems = [
     {
-      name: 'Home',
+      name: 'HOME',
       slug: "/",
       active: true
     },
     {
-      name: "Login",
+      name: "LOGIN",
       slug: "/login",
       active: !authStatus,
     },
     {
-      name: "Signup",
+      name: "SIGN UP",
       slug: "/signup",
       active: !authStatus,
     },
     {
-      name: "All Blogs",
+      name: "ALL BLOGS",
       slug: "/all-blogs",
       active: authStatus,
     },
     {
-      name: "Add New Blog",
-      slug: "/add-blog",
+      name: "CREATE YOUR BLOG",
+      slug: "/create-blog",
       active: authStatus,
     },
+    {
+      name: "PROFILE",
+      slug: "/profile",
+      active: authStatus,
+    }
   ]
 
   return (
-    <header className="py-3 shadow-sm bg-transparent">
+    <header className="flex items-center shadow sticky z-50 top-0 w-full h-20 bg-[#FCCDCD]">
       <Container>
-        <nav className="flex">
+        <nav className='flex'>
           <div className="mr-4">
             <Link to='/'>
-              <Logo width="80px" />
+              <div className="flex">
+                <Logo width='40px' />
+                <h2 className="text-xl ml-4 my-auto text-center font-mono">Blogify</h2>
+              </div>
             </Link>
           </div>
-          <ul className="flex space-x-4 ml-auto">
+          <ul className="ml-auto flex">
             {navItems.map((item) =>
               item.active ? (
                 <li key={item.name}>
-                  <Link to={item.slug} className="text-lg text-gray-600 hover:text-gray-300">{item.name}</Link>
+                  <NavLink
+                    to={item.slug}
+                    className={({ isActive }) =>
+                      `inline-block text-base px-6 py-2 duration-200 hover:bg-[#f9928d] focus:outline-none rounded-full
+                      ${isActive ? 'underline underline-offset-4' : ''}`
+                    }
+                  >
+                    {item.name}
+                  </NavLink>
                 </li>
               ) : null
-            )}
-            {authStatus && (
-              <li>
-                <LogoutBtn />
-              </li>
             )}
           </ul>
         </nav>
