@@ -5,6 +5,7 @@ import EditBlog from "./EditBlog";
 import HomePage from "./HomePage";
 import LoginPage from "./LoginPage";
 import SignupPage from "./SignupPage";
+import Profile from "./Profile";
 
 export {
     AddBlog,
@@ -13,5 +14,6 @@ export {
     EditBlog,
     HomePage,
     LoginPage,
-    SignupPage
+    SignupPage,
+    Profile
 }
