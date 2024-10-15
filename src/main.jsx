@@ -2,10 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { AuthLayout, Profile } from '../src/components'
+import { AuthLayout } from '../src/components'
 import { Login as LoginComponent } from '../src/components'
-import { Signup as SignupComponent } from '../src/components'
-import { HomePage, AddBlog, AllBlogs, BlogPage, EditBlog } from '../src/pages'
+import { HomePage, AddBlog, AllBlogs, BlogPage, EditBlog, SignupPage, Profile } from '../src/pages'
 import store from './store/store.js'
 import App from './App.jsx'
 import './index.css'
@@ -17,7 +16,7 @@ const router = createBrowserRouter(
       element: <App />,
       children: [
         {
-          path: '/home',
+          path: '/',
           element: <HomePage />
         },
         {
@@ -32,7 +31,7 @@ const router = createBrowserRouter(
           path: '/signup',
           element: (
             <AuthLayout authentication={false}>
-              <SignupComponent />
+              <SignupPage />
             </AuthLayout>
           )
         },
@@ -40,6 +39,7 @@ const router = createBrowserRouter(
           path: '/all-blogs',
           element: (
             <AuthLayout authentication>
+              {" "}
               <AllBlogs />
             </AuthLayout>
           )
@@ -48,12 +48,13 @@ const router = createBrowserRouter(
           path: '/create-blog',
           element: (
             <AuthLayout authentication>
+              {" "}
               <AddBlog />
             </AuthLayout>
           )
         },
         {
-          path: "/edit-post/:slug",
+          path: "/edit-blog/:slug",
           element: (
             <AuthLayout authentication>
               {" "}
