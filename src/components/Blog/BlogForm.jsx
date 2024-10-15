@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux'
 import { Button, Input, Select, RTE } from '../index'
 import appwriteService from '../../appwrite/appwriteService'
 import uploadService from '../../appwrite/fileUpload'
-import noImage from '../../assets/no_image.jpg'
 
 function BlogForm({ blog }) {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
@@ -25,65 +24,52 @@ function BlogForm({ blog }) {
     const submit = async (data) => {
         try {
             let fileUrl = null;
-    
+
             // Check if an image is selected and upload it
             if (data.image && data.image.length > 0) {
-                fileUrl = await uploadService.uploadBlogImage(data.image[0]);
+                fileUrl = await uploadService.uploadFile(data.image[0]);
                 console.log("Uploaded image URL:", fileUrl);  // Log the uploaded file URL
             } else {
                 console.warn("No image uploaded");
             }
-    
-            // If no image is uploaded for a new blog, prevent submission
-            if (!fileUrl && !blog) {
-                console.error("No image uploaded for new blog.");
-                return; // Prevent submission if no image is uploaded for a new blog
-            }
-    
-            // Set blogImage, default to the existing blog image if updating
-            const blogImage = fileUrl || (blog ? blog.blogImg : null);
-    
-            // Ensure blogImage is defined before submission
-            if (!blogImage) {
-                console.error("Missing blogImage URL:", blogImage);
-                return; // Prevent submission if blogImage is not set
-            }
-    
+
             if (blog) {
                 // If updating, delete the old image if a new one is uploaded
-                if (fileUrl && blog.blogImg) {
-                    await uploadService.deleteBlogImage(blog.blogImg);
+                if (fileUrl && blog.blogImage) {
+                    await uploadService.deleteFile(blog.blogImage);
                 }
-    
+
                 const updatedBlogData = {
                     ...data,
-                    blogImage,  // Use the correct blog image URL
+                    blogImage: fileUrl ? fileUrl.$id : blog.blogImage,  // Use the correct blog image URL
                 };
-    
+
                 const dbBlog = await appwriteService.updateBlog(blog.$id, updatedBlogData);
-    
+
                 if (dbBlog) {
                     navigate(`/blog/${blog.$id}`);  // Navigate to the updated blog post
                 }
             } else {
                 // Creating a new blog
-                const newBlogData = {
-                    ...data,
-                    blogImage,  // Use the uploaded blog image URL
-                    userId: userData.$id,  // Ensure the userId is added for new blogs
-                };
-    
-                console.log("Creating new blog with data:", newBlogData);  // Log the data being sent
-                const dbBlog = await appwriteService.createBlog(newBlogData);
-                if (dbBlog) {
-                    navigate(`/post/${dbBlog.$id}`);  // Navigate to the newly created blog post
+                if(fileUrl) {
+                    const newBlogData = {
+                        ...data,
+                        blogImage: fileUrl.$id,  // Use the uploaded blog image URL
+                        userId: userData.$id,  // Ensure the userId is added for new blogs
+                    };
+
+                    console.log("Creating new blog with data:", newBlogData);  // Log the data being sent
+                    const dbBlog = await appwriteService.createBlog(newBlogData);
+                    if (dbBlog) {
+                        navigate(`/blog/${dbBlog.$id}`);  // Navigate to the newly created blog post
+                    }
                 }
             }
         } catch (error) {
             console.error("Error while submitting:", error);
         }
     };
-    
+
 
     const slugTransform = useCallback((value) => {
         if (value && typeof value === 'string') {
@@ -136,16 +122,16 @@ function BlogForm({ blog }) {
             </div>
             <div className="w-1/3 px-2">
                 <Input
-                    label="Featured Image :"
+                    label="Blog Image :"
                     type="file"
                     className="mb-4"
                     accept="image/png, image/jpg, image/jpeg, image/gif, image/webp"
                     {...register("image", { required: !blog })}
                 />
-                {blog && blog.blogImg && (
+                {blog && blog.blogImage && (
                     <div className="w-full mb-4">
                         <img
-                            src={uploadService.getFilePreview(blog.blogImg)}
+                            src={uploadService.getFilePreview(blog.blogImage)}
                             alt={blog.title}
                             className="rounded-lg"
                         />
