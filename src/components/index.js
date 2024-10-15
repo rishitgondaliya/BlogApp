@@ -12,7 +12,10 @@ import BlogForm from "./Blog/BlogForm";
 import AuthLayout from '../components/auth/AuthLayout'
 import Login from "./auth/Login";
 import Signup from "./auth/Signup"
-import Profile from "./profile/Profile";
+import ProfilePicture from "./profile/ProfilePicture";
+import ProfileForm from "./profile/ProfileForm";
+import ImageUpload from "./profile/ImageUpload";
+import Modal from "./profile/Modal";
 
 export {
     Container,
@@ -29,5 +32,8 @@ export {
     AuthLayout, 
     Login,
     Signup,
-    Profile
+    ProfilePicture,
+    ProfileForm,
+    ImageUpload,
+    Modal
 }
