@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Container, BlogForm } from '../components'
-import appwriteService from '../appwrite/appwriteService'
 import { useNavigate, useParams } from 'react-router-dom'
+import appwriteService from '../appwrite/appwriteService'
 
 function EditBlog() {
     const [blog, setBlog] = useState(null)
@@ -17,7 +17,7 @@ function EditBlog() {
                     }
                 })
         } else {
-            navigate("/")
+            navigate("/all-blogs")
         }
     }, [slug, navigate])
 
