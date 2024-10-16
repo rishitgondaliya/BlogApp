@@ -1,13 +1,13 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
-import parse from "html-react-parser";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Button, Container } from "../components";
+import parse from "html-react-parser";
 import appwriteService from "../appwrite/appwriteService";
+import uploadService from "../appwrite/fileUpload";
 
 export default function BlogPage() {
-  const [blog, setblog] = useState(null);
+  const [blog, setBlog] = useState(null);
   const { slug } = useParams();
   const navigate = useNavigate();
 
@@ -17,10 +17,11 @@ export default function BlogPage() {
 
   useEffect(() => {
     if (slug) {
-      appwriteService.getblog(slug).then((blog) => {
-        if (blog) setblog(blog);
-        else navigate("/");
-      });
+      appwriteService.getBlog(slug)
+        .then((blog) => {
+          if (blog) setBlog(blog);
+          else navigate("/");
+        });
     } else navigate("/");
   }, [slug, navigate]);
 
@@ -32,23 +33,21 @@ export default function BlogPage() {
   })
 
   const deleteblog = () => {
-    appwriteService.deleteblog(blog.$id).then((status) => {
-      if (status) {
-        appwriteService.deleteFile(blog.featuredImage);
-        navigate("/");
-      }
-    });
+    appwriteService.deleteBlog(blog.$id)
+      .then((status) => {
+        if (status) {
+          uploadService.deleteFile(blog.blogImage);
+          navigate("/all-blogs");
+        }
+      });
   };
 
   if (!blog || !userData) {
     return <div className="w-full py-8 mt-4 text-center">
       <Container>
-        <div className="flex flex-wrap">
-          <div className="p-2 w-full">
-            <h1 className="text-2xl font-bold hover:text-gray-500">
-              Loading your blog...
-            </h1>
-          </div>
+        <div className="flex justify-center items-center">
+          <h1 className="text-xl font-medium">Loading your blog...</h1>
+          <div className="ml-4 animate-spin rounded-full h-8 w-8 border-t-2 border-black"></div>
         </div>
       </Container>
     </div>
@@ -62,16 +61,16 @@ export default function BlogPage() {
           <h1 className="text-2xl ml-4 font-bold">{blog.title}</h1>
         </div>
         <div className="w-fit h-[60vh] flex justify-cente mx-auto mb-4 relative border border-black rounded-xl p-2">
-          {blog.featuredImage ? (
+          {blog.blogImage ? (
             <img
-              src={appwriteService.getFilePreview(blog.featuredImage)}
+              src={uploadService.getFilePreview(blog.blogImage)}
               alt={blog.title}
               className="rounded-xl"
             />
           ) : (
             <img
               src="https://static.vecteezy.com/system/resources/previews/036/226/872/non_2x/ai-generated-nature-landscapes-background-free-photo.jpg"
-              alt="Placeholder"
+              alt={blog.title}
               className="rounded-xl"
             />
           )}
