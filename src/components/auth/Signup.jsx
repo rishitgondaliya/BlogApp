@@ -29,7 +29,7 @@ function Signup() {
         <div className="flex items-center justify-center">
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
-                    <span className="inline-block w-full max-w-[100px]">
+                    <span className="inline-block w-full max-w-[80px]">
                         <Logo width="100%" />
                     </span>
                 </div>
@@ -38,13 +38,13 @@ function Signup() {
                     Already have an account?&nbsp;
                     <Link
                         to="/login"
-                        className="font-medium text-primary transition-all duration-200 hover:underline"
+                        className="font-medium text-blue-600 transition-all duration-200 hover:underline underline-offset-2"
                     >
                         Sign In
                     </Link>
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-
+                
                 <form onSubmit={handleSubmit(createAccount)}>
                     <div className='space-y-5'>
                         <Input
