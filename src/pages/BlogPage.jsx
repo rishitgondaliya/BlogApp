@@ -57,9 +57,6 @@ export default function BlogPage() {
   return blog ? (
     <div className="py-8 w-2/3 mx-auto">
       <Container>
-        <div className="w-full mb-6">
-          <h1 className="text-2xl ml-4 font-bold">{blog.title}</h1>
-        </div>
         <div className="w-fit h-[60vh] flex justify-cente mx-auto mb-4 relative border border-black rounded-xl p-2">
           {blog.blogImage ? (
             <img
@@ -76,9 +73,9 @@ export default function BlogPage() {
           )}
 
           {isAuthor && (
-            <div className="absolute right-6 top-6">
+            <div className="absolute right-4 top-4">
               <Link to={`/edit-blog/${blog.$id}`}>
-                <Button bgColor="bg-green-500" className="mr-3">
+                <Button bgColor="bg-green-500" className="mr-2">
                   Edit
                 </Button>
               </Link>
@@ -89,6 +86,9 @@ export default function BlogPage() {
               </Link>
             </div>
           )}
+        </div>
+        <div className="w-full mb-6">
+          <h1 className="text-2xl ml-4 font-bold">{blog.title}</h1>
         </div>
         <div className="browser-css">
           {parse(blog.content)}
