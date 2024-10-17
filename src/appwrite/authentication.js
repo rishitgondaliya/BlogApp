@@ -26,6 +26,7 @@ export class AuthService {
       return userAccount;
     } catch (error) {
       console.log("Appwrite service :: createUserAccount :: error ", error);
+      {alert("Paasword length must be 8 characters long")}
     }
   }
 
@@ -34,6 +35,7 @@ export class AuthService {
       return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {
       console.log("Appwrite service :: userLogin :: error ", error);
+      {alert("Invalid login credentials, please try again")}
     }
   }
 
@@ -43,7 +45,6 @@ export class AuthService {
     } catch (error) {
       console.log("Appwrite service :: getCurrentUser :: error ", error);
     }
-
     return null;
   }
 
