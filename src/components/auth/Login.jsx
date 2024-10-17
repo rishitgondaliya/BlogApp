@@ -31,7 +31,7 @@ function Login() {
         <div className='flex items-center justify-center w-full'>
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
-                    <span className="inline-block w-full max-w-[100px]">
+                    <span className="inline-block w-full max-w-[80px]">
                         <Logo width="100%" />
                     </span>
                 </div>
@@ -40,7 +40,7 @@ function Login() {
                     Don&apos;t have any account?&nbsp;
                     <Link
                         to="/signup"
-                        className="font-medium text-primary transition-all duration-200 hover:underline"
+                        className="font-medium text-blue-600 transition-all duration-200 hover:underline underline-offset-2"
                     >
                         Sign Up
                     </Link>
