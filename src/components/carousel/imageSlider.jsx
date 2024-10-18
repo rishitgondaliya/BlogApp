@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import Carousel from 'react-material-ui-carousel';
-import blog from '../assets/blog.png';
-import blog1 from '../assets/blog2.png';
-import blog2 from '../assets/blog3.png';
+import blog from '../../assets/blog.png';
+import blog1 from '../../assets/blog2.png';
+import blog2 from '../../assets/blog3.png';
 
 const ImageSlider = ({ setBgColor }) => {
     const items = [
