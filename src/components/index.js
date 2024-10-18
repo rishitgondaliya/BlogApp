@@ -16,6 +16,7 @@ import ProfilePicture from "./profile/ProfilePicture";
 import ProfileForm from "./profile/ProfileForm";
 import ImageUpload from "./profile/ImageUpload";
 import Modal from "./profile/Modal";
+import ImageSlider from "./carousel/imageSlider";
 
 export {
     Container,
@@ -35,5 +36,6 @@ export {
     ProfilePicture,
     ProfileForm,
     ImageUpload,
-    Modal
+    Modal,
+    ImageSlider
 }
