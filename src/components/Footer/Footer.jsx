@@ -3,7 +3,8 @@ import { Logo } from "../index"
 
 export default function Footer() {
     return (
-        <section className="relative overflow-hidden py-10 bg-[#191A21]">
+        <section className="relative w-full overflow-hidden py-10 bg-[#192132] bottom-0">
+            {/* #1d2b34 */}
             <div className="relative z-10 mx-auto max-w-7xl px-4">
                 <div className="-m-6 flex flex-wrap">
                     <div className="w-full p-6 md:w-1/2 lg:w-5/12">
@@ -51,14 +52,6 @@ export default function Footer() {
                                         Affiliate Program
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link
-                                        className=" text-base font-medium text-white hover:text-gray-700"
-                                        to="/"
-                                    >
-                                        Press Kit
-                                    </Link>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -71,7 +64,7 @@ export default function Footer() {
                                 <li className="mb-4">
                                     <Link
                                         className=" text-base font-medium text-white hover:text-gray-700"
-                                        to="/"
+                                        to="/profile"
                                     >
                                         Account
                                     </Link>
@@ -90,14 +83,6 @@ export default function Footer() {
                                         to="/"
                                     >
                                         Contact Us
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className=" text-base font-medium text-white hover:text-gray-700"
-                                        to="/"
-                                    >
-                                        Customer Support
                                     </Link>
                                 </li>
                             </ul>
@@ -123,14 +108,6 @@ export default function Footer() {
                                         to="/"
                                     >
                                         Privacy Policy
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        className=" text-base font-medium text-white hover:text-gray-700"
-                                        to="/"
-                                    >
-                                        Licensing
                                     </Link>
                                 </li>
                             </ul>
