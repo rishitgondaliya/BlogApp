@@ -4,7 +4,6 @@ import { Logo } from "../index"
 export default function Footer() {
     return (
         <section className="relative w-full overflow-hidden py-10 bg-[#192132] bottom-0">
-            {/* #1d2b34 */}
             <div className="relative z-10 mx-auto max-w-7xl px-4">
                 <div className="-m-6 flex flex-wrap">
                     <div className="w-full p-6 md:w-1/2 lg:w-5/12">
