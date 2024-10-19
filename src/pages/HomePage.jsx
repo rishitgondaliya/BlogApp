@@ -25,10 +25,7 @@ function HomePage() {
                             margin={4}
                             paddingX={2}
                             paddingY={1}
-<<<<<<< HEAD
                             fontSize={'1rem'}
-=======
->>>>>>> 07155e18369b9977e519e6175721ad83a990bf1c
                         >
                             CREATE YOUR BLOG
                         </Button>
@@ -68,10 +65,7 @@ function HomePage() {
                                 margin={4}
                                 paddingX={2}
                                 paddingY={1}
-<<<<<<< HEAD
                                 fontSize={'1rem'}
-=======
->>>>>>> 07155e18369b9977e519e6175721ad83a990bf1c
                             >
                                 CREATE YOUR BLOG
                             </Button>
@@ -81,10 +75,6 @@ function HomePage() {
                                 margin={4}
                                 paddingX={2}
                                 paddingY={1}
-<<<<<<< HEAD
-                                fontSize={'1rem'}
-=======
->>>>>>> 07155e18369b9977e519e6175721ad83a990bf1c
                             >
                                 CREATE YOUR BLOG
                             </Button>
