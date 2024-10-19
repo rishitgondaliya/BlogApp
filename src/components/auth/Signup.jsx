@@ -19,7 +19,7 @@ function Signup() {
             if (userData) {
                 const userData = await authService.getCurrentUser()
                 if (userData) dispatch(authLogin(userData))
-                navigate("/")
+                navigate("/all-blogs")
             }
         } catch (error) {
             setError(error.message)
@@ -27,7 +27,10 @@ function Signup() {
     }
     return (
         <div className="flex items-center justify-center">
-            <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+            <div className={`mx-auto w-full max-w-lg bg-[#d1d0fc] rounded-xl p-10 border border-black/10`}
+            // style={{background: 'linear-gradient(to right, #2193b0, #E684AE)'}}
+            >
+                {/* #ff6e7f #bfe9ff */}
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[80px]">
                         <Logo width="100%" />
@@ -45,17 +48,17 @@ function Signup() {
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
                 
-                <form onSubmit={handleSubmit(createAccount)}>
-                    <div className='space-y-5'>
+                <form onSubmit={handleSubmit(createAccount)} className='mt-4'>
+                    <div className='space-y-2'>
                         <Input
-                            label="Full Name: "
+                            label="Full Name "
                             placeholder="Enter your full name"
                             {...register("name", {
                                 required: true,
                             })}
                         />
                         <Input
-                            label="Email: "
+                            label="Email "
                             placeholder="Enter your email"
                             type="email"
                             {...register("email", {
@@ -67,20 +70,28 @@ function Signup() {
                             })}
                         />
                         <Input
-                            label="Password: "
+                            label="Password "
                             type="password"
                             placeholder="Enter your password"
                             {...register("password", {
                                 required: true,
                             })}
                         />
-                        <Button type="submit" className="w-full">
-                            Create Account
-                        </Button>
+                        <div className="flex justify-center pt-4">
+                            <Button
+                                type="submit"
+                                size="large"
+                                paddingX={2}
+                                paddingY={1}
+                                fontSize='1rem'
+                                bgColor='#b1b1fa'
+                            >
+                                CREATE ACCOUNT
+                            </Button>
+                        </div>
                     </div>
                 </form>
             </div>
-
         </div>
     )
 }
