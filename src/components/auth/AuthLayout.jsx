@@ -10,9 +10,9 @@ function AuthLayout({ children, authentication = true }) {
 
     useEffect(() => {
         if (authentication && isLoggedIn !== authentication) {
-            navigate("/login")
-        } else if (!authentication && isLoggedIn !== authentication) {
             navigate("/")
+        } else if (!authentication && isLoggedIn !== authentication) {
+            navigate("/all-blogs")
         }
         setLoader(false)
     }, [isLoggedIn, navigate, authentication])
