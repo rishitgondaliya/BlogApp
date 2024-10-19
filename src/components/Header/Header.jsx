@@ -1,34 +1,25 @@
 import { Container, Logo } from '../index';
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesomeIcon
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import conf from '../../conf/conf';
 
 function Header() {
   const authStatus = useSelector((state) => state.auth.status);
-  const userData = useSelector((state) => state.auth.userData); // Assuming userData contains profile image
+  const userData = useSelector((state) => state.auth.userData);
 
-  // Construct the profile image URL
-  const baseURL = 'https://cloud.appwrite.io/v1/storage/buckets/6700f9050034c08fabfb/files/';
-  const profileImageID = userData?.prefs?.profilePicture; // Extract profile image ID if available
-  const profileImageURL = profileImageID 
-    ? `${baseURL}${profileImageID}/view?project=6700d75000145981c3e3&mode=admin` 
-    : null; // Constructing the complete URL
+  const profileImageID = userData?.prefs?.profilePicture;
 
+  const baseURL = `https://cloud.appwrite.io/v1/storage/buckets/${conf.appwriteProfileImageBucketID}/files/`;
+  const profileImageURL = profileImageID
+    ? `${baseURL}${profileImageID}/view?project=${conf.appwriteProjectID}&mode=admin`
+    : null;
+    
   const navItems = [
     {
-      name: 'HOME',
-      slug: '/',
-      active: true,
-    },
-    {
-      name: 'LOGIN',
+      name: 'SIGN IN',
       slug: '/login',
-      active: !authStatus,
-    },
-    {
-      name: 'SIGN UP',
-      slug: '/signup',
       active: !authStatus,
     },
     {
@@ -43,7 +34,6 @@ function Header() {
     },
     {
       name: (
-        // Display profile image if available, otherwise fallback to icon
         profileImageURL ? (
           <img
             src={profileImageURL}
@@ -61,7 +51,6 @@ function Header() {
 
   return (
     <header className="flex items-center shadow sticky z-50 top-0 w-full h-20 bg-[#fcd0d0]">
-      {console.log(profileImageURL)} {/* Debugging line */}
       <Container>
         <nav className='flex items-center'>
           <div className="mr-4 items-center">
