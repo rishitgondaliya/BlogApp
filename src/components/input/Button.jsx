@@ -1,18 +1,36 @@
 /* eslint-disable react/prop-types */
+import MuiButton from '@mui/material/Button';
 
-function Button({
+const Button = ({
   children,
   type = 'button',
-  bgColor = 'bg-blue-600',
-  textColor = 'text-white',
-  className = '',
+  bgColor = '',
+  textColor = 'inherit',
+  margin = 0,
+  paddingX= 0,
+  paddingY= 0,
+  fontSize = 0,
+  variant = 'contained',
   ...props
-}) {
+}) => {
   return (
-    <button className={`py-1 px-2 rounded-lg ${type} ${bgColor} ${textColor} ${className}`} {...props}>
+    <MuiButton
+      type={type}
+      sx={{
+        backgroundColor: bgColor === 'primary' ? undefined : bgColor,
+        color: textColor,
+        margin: margin,
+        paddingX: paddingX,
+        paddingY: paddingY,
+        fontSize: fontSize,
+      }}
+      variant={variant}
+      textColor={textColor}
+      {...props}
+    >
       {children}
-    </button>
-  )
-}
+    </MuiButton>
+  );
+};
 
-export default Button
+export default Button;
