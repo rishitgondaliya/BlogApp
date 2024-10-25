@@ -10,13 +10,13 @@ export default function Footer() {
                         <div className="flex h-full flex-col justify-between">
                             <div>
                                 <Link to="/" className="mb-4 inline-flex items-center">
-                                    <Logo width="100px" />
-                                    <h2 className="text-2xl ml-4 text-white font-mono">Blogify</h2>
+                                    <Logo width="130px"/>
+                                    <h2 className="text-2xl ml-4 text-white font-mono" style={{fontFamily: "Pacifico"}}>Blogify</h2>
                                 </Link>
                             </div>
                             <div>
                                 <p className="text-sm text-white">
-                                    &copy; Copyright 2024. All Rights Reserved by Blogify.
+                                    &copy; Copyright 2024. All Rights Reserved by <span className='font-light' style={{fontFamily: "Pacifico"}}>Blogify</span>.
                                 </p>
                             </div>
                         </div>
