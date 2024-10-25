@@ -1,24 +1,33 @@
 /* eslint-disable react/prop-types */
-import { useCallback, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { Button, Input, Select, RTE } from '../index'
-import appwriteService from '../../appwrite/appwriteService'
-import uploadService from '../../appwrite/fileUpload'
+
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Button, Input, Select, RTE } from '../index';
+import appwriteService from '../../appwrite/appwriteService';
+import uploadService from '../../appwrite/fileUpload';
 
 function BlogForm({ blog }) {
-    const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
+    const { register, handleSubmit, control, getValues } = useForm({
         defaultValues: {
             title: blog?.title || '',
             content: blog?.content || '',
-            slug: blog?.slug || '',
-            status: blog?.status || 'active'
-        }
-    })
+            status: blog?.status || 'active',
+        },
+    });
 
-    const navigate = useNavigate()
-    const userData = useSelector(state => state.auth.userData)
+    const [imagePreview, setImagePreview] = useState(null); // State for image preview
+    const navigate = useNavigate();
+    const userData = useSelector((state) => state.auth.userData);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const previewUrl = URL.createObjectURL(file);
+            setImagePreview(previewUrl); // Set the image preview
+        }
+    };
 
     const submit = async (data) => {
         try {
@@ -27,9 +36,9 @@ function BlogForm({ blog }) {
             // Check if an image is selected and upload it
             if (data.image && data.image.length > 0) {
                 fileUrl = await uploadService.uploadFile(data.image[0]);
-                console.log("Uploaded image URL:", fileUrl);  // Log the uploaded file URL
+                console.log('Uploaded image URL:', fileUrl);
             } else {
-                console.warn("No image uploaded");
+                console.warn('No image uploaded');
             }
 
             if (blog) {
@@ -40,114 +49,116 @@ function BlogForm({ blog }) {
 
                 const updatedBlogData = {
                     ...data,
-                    blogImage: fileUrl ? fileUrl.$id : blog.blogImage,  // Use the correct blog image URL
+                    blogImage: fileUrl ? fileUrl.$id : blog.blogImage,
                 };
 
                 const dbBlog = await appwriteService.updateBlog(blog.$id, updatedBlogData);
 
                 if (dbBlog) {
-                    navigate(`/blog/${blog.$id}`);  // Navigate to the updated blog post
+                    navigate(`/blog/${blog.$id}`);
                 }
             } else {
                 // Creating a new blog
-                if(fileUrl) {
+                if (fileUrl) {
                     const newBlogData = {
                         ...data,
-                        blogImage: fileUrl.$id,  // Use the uploaded blog image URL
-                        userId: userData.$id,  // Ensure the userId is added for new blogs
+                        blogImage: fileUrl.$id,
+                        userId: userData.$id,
                     };
 
-                    console.log("Creating new blog with data:", newBlogData);  // Log the data being sent
+                    console.log('Creating new blog with data:', newBlogData);
                     const dbBlog = await appwriteService.createBlog(newBlogData);
                     if (dbBlog) {
-                        navigate(`/blog/${dbBlog.$id}`);  // Navigate to the newly created blog post
+                        navigate(`/blog/${dbBlog.$id}`);
                     }
                 }
             }
         } catch (error) {
-            console.error("Error while submitting:", error);
+            console.error('Error while submitting:', error);
         }
     };
 
-
-    const slugTransform = useCallback((value) => {
-        if (value && typeof value === 'string') {
-            return value
-                .trim()
-                .toLowerCase()
-                .replace(/[^a-zA-Z\d]+/g, "-");
-        }
-        return '';
-    }, []);
-
-    useEffect(() => {
-        const subscription = watch((value, { name }) => {
-            if (name === 'title') {
-                setValue('slug', slugTransform(value.title, {
-                    shouldValidate: true
-                }))
-            }
-        })
-
-        return () => {
-            subscription.unsubscribe()
-        }
-    }, [watch, slugTransform, setValue])
-
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-            <div className="w-2/3 px-2">
-                <Input
-                    label="Title :"
-                    placeholder="Title"
-                    className="mb-4"
-                    {...register("title", { required: true })}
-                />
-                <Input
-                    label="Slug :"
-                    placeholder="Slug"
-                    className="mb-4"
-                    {...register("slug", { required: true })}
-                    onInput={(e) => {
-                        setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
-                    }}
-                />
-                <RTE
-                    label="Content :"
-                    name="content"
-                    control={control}
-                    defaultValue={getValues("content")}
-                />
+            <div className="w-2/3 px-6">
+                <div className="mb-4">
+                    <label className="block text-base font-medium text-gray-700">Title :</label>
+                    <Input
+                        label="Title"
+                        placeholder="Enter blog title"
+                        className="mb-4"
+                        {...register('title', { required: true })}
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-base font-medium text-gray-700 mb-4">Content :</label>
+                    <RTE
+                        name="content"
+                        control={control}
+                        defaultValue={getValues('content')}
+                    />
+                </div>
             </div>
-            <div className="w-1/3 px-2">
-                <Input
-                    label="Blog Image :"
-                    type="file"
-                    className="mb-4"
-                    accept="image/png, image/jpg, image/jpeg, image/gif, image/webp"
-                    {...register("image", { required: !blog })}
-                />
-                {blog && blog.blogImage && (
-                    <div className="w-full mb-4">
-                        <img
-                            src={uploadService.getFilePreview(blog.blogImage)}
-                            alt={blog.title}
-                            className="rounded-lg"
-                        />
-                    </div>
-                )}
-                <Select
-                    options={["active", "inactive"]}
-                    label="Status"
-                    className="mb-4"
-                    {...register("status", { required: true })}
-                />
-                <Button type="submit" bgColor={blog ? "bg-green-500" : undefined} className="w-full">
-                    {blog ? "Update" : "Submit"}
-                </Button>
+
+            <div className="w-1/3 px-6">
+                <div className="mb-4">
+                    <label className="block text-base font-medium text-gray-700">Blog Image :</label>
+                    <Input
+                        type="file"
+                        className="mb-4"
+                        accept="image/png, image/jpg, image/jpeg, image/gif, image/webp"
+                        {...register('image', { required: !blog })}
+                        onChange={handleImageChange} // Handle image selection for preview
+                    />
+                    {/* Show image preview */}
+                    {imagePreview && (
+                        <div className="w-full mb-4">
+                            <img
+                                src={imagePreview}
+                                alt="Image Preview"
+                                className="rounded-lg"
+                            />
+                        </div>
+                    )}
+                    {/* Show blog image when editing */}
+                    {blog && blog.blogImage && !imagePreview && (
+                        <div className="w-fit mb-4 mx-auto">
+                            <img
+                                src={uploadService.getFilePreview(blog.blogImage)}
+                                alt={blog.title}
+                                className="rounded-lg max-h-72"
+                            />
+                        </div>
+                    )}
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-base font-medium text-gray-700 mb-4">Status :</label>
+                    <Select
+                        options={['active', 'inactive']}
+                        label="Status"
+                        className="mb-4"
+                        {...register('status', { required: true })}
+                    />
+                </div>
+                <div className="flex justify-center pt-4">
+                    <Button
+                        type="submit"
+                        size="large"
+                        className={'w-full font-semibold'}
+                        paddingX={2}
+                        paddingY={0.5}
+                        fontSize='1rem'
+                        textColor='white'
+                        bgColor={blog ? '#52f752' : '#de47f5'}
+                    >
+                        {blog ? 'Update' : 'Submit'}
+                    </Button>
+                </div>
             </div>
         </form>
-    )
+    );
 }
 
-export default BlogForm
+export default BlogForm;
