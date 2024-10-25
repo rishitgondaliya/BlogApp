@@ -56,8 +56,8 @@ function Header() {
           <div className="mr-4 items-center">
             <Link to='/'>
               <div className="flex">
-                <Logo width='40px' />
-                <h2 className="text-xl ml-4 my-auto text-center font-mono">Blogify</h2>
+                <Logo width='70px' />
+                <h2 className="text-xl ml-4 my-auto text-center" style={{fontFamily: "Pacifico"}}>Blogify</h2>
               </div>
             </Link>
           </div>
