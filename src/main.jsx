@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthLayout } from '../src/components'
-import { Login as LoginComponent } from '../src/components'
+import { LoginPage as LoginComponent } from '../src/pages'
 import { HomePage, AddBlog, AllBlogs, BlogPage, EditBlog, SignupPage, Profile } from '../src/pages'
 import store from './store/store.js'
 import App from './App.jsx'
@@ -54,7 +54,7 @@ const router = createBrowserRouter(
           )
         },
         {
-          path: "/edit-blog/:slug",
+          path: "/edit-blog/:id",
           element: (
             <AuthLayout authentication>
               {" "}
@@ -72,7 +72,7 @@ const router = createBrowserRouter(
           )
         },
         {
-          path: "/blog/:slug",
+          path: "/blog/:id",
           element: (
             <AuthLayout>
               <BlogPage />
