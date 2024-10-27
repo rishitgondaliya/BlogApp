@@ -29,13 +29,13 @@ function Login() {
     }
     return (
         <div className='flex items-center justify-center w-full'>
-            <div className={`mx-auto w-full max-w-lg bg-[#d1d0fc] rounded-xl p-10 border border-black/10`}>
+            <div className={`mx-auto w-full max-w-md bg-[#d1d0fc] rounded-xl p-10 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
-                    <span className="inline-block w-full max-w-[80px]">
+                    <span className="inline-block w-full max-w-[120px]">
                         <Logo width="100%" />
                     </span>
                 </div>
-                <h2 className="text-center text-2xl font-bold leading-tight">Sign in to your account</h2>
+                <h2 className="text-center text-xl font-semibold leading-tight">Sign in to your <span className='font-light' style={{fontFamily: "Pacifico"}}>Blogify</span> account</h2>
                 <p className="mt-2 text-center text-base text-black/60">
                     Don&apos;t have any account?&nbsp;
                     <Link
