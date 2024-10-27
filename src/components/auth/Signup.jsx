@@ -32,11 +32,11 @@ function Signup() {
             >
                 {/* #ff6e7f #bfe9ff */}
                 <div className="mb-2 flex justify-center">
-                    <span className="inline-block w-full max-w-[80px]">
+                    <span className="inline-block w-full max-w-[120px]">
                         <Logo width="100%" />
                     </span>
                 </div>
-                <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
+                <h2 className="text-center text-xl font-semibold leading-tight">Sign up to create a <span className='font-light' style={{fontFamily: "Pacifico"}}>Blogify</span> account</h2>
                 <p className="mt-2 text-center text-base text-black/60">
                     Already have an account?&nbsp;
                     <Link
