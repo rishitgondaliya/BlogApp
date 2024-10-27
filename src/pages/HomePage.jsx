@@ -1,13 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../components';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ImageSlider } from '../components/index';
-import map2 from '../assets/worldmap2.jpg';
+import map2 from '../assets/home/worldmap2.jpg';
 
 function HomePage() {
     const [bgColor, setBgColor] = useState('#cf3e34');
     const userData = useSelector((state) => state.auth.userData);
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (userData) {
+            navigate('/all-blogs')
+        } else {
+            navigate('/')
+        }
+    }, [userData])
 
     return (
         <div>
@@ -15,14 +25,14 @@ function HomePage() {
                 className="w-full text-white px-10 pt-10 text-center"
                 style={{ backgroundColor: bgColor }} // Set dynamic background color
             >
-                <h2 className="text-5xl font-bold">Welcome to Blogify!</h2>
+                <h2 className="text-5xl font-bold">Welcome to <span className='font-light' style={{fontFamily: "Pacifico"}}>Blogify</span> !</h2>
                 <p className="mt-4 text-2xl">Share your stories with the world.</p>
 
                 {
                     !userData ? <Link to="/login">
                         <Button
                             bgColor='#f97316'
-                            margin={4}
+                            marginY={4}
                             paddingX={2}
                             paddingY={1}
                             fontSize={'1rem'}
@@ -32,7 +42,7 @@ function HomePage() {
                     </Link> : <Link to="/create-blog">
                         <Button
                             bgColor='#f97316'
-                            margin={4}
+                            marginY={4}
                             paddingX={2}
                             paddingY={1}
                             fontSize={'1rem'}
@@ -62,7 +72,7 @@ function HomePage() {
                         !userData ? <Link to="/login">
                             <Button
                                 bgColor='#f97316'
-                                margin={4}
+                                marginY={6}
                                 paddingX={2}
                                 paddingY={1}
                                 fontSize={'1rem'}
@@ -72,9 +82,10 @@ function HomePage() {
                         </Link> : <Link to="/create-blog">
                             <Button
                                 bgColor='#f97316'
-                                margin={4}
+                                marginY={6}
                                 paddingX={2}
                                 paddingY={1}
+                                fontSize={'1rem'}
                             >
                                 CREATE YOUR BLOG
                             </Button>
