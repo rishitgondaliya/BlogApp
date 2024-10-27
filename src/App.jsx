@@ -20,14 +20,14 @@ function App() {
         }
       })
       .finally(() => setLoading(false))
-  })
+  }, [dispatch])
 
   return !loading ? (
     <div className="min-h-screen flex flex-wrap content-between bg-blue-200"
       style={{ backgroundImage: 'linear-gradient(to right, #9aabff, #48e4dc)' }}>
       <div className="w-full block">
         <Header />
-        <main className='p-8'>
+        <main className='p-0'>
           <Outlet />
         </main>
         <Footer />
