@@ -51,11 +51,11 @@ export default function BlogPage() {
   };
 
   // Handlers for navigating between blogs
-  const handlePrev = () => {
+  const handleNext = () => {
     setIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : blogs.length - 1));
   };
 
-  const handleNext = () => {
+  const handlePrev = () => {
     setIndex((prevIndex) => (prevIndex + 1) % blogs.length);
   };
 
