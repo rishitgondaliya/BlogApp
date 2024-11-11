@@ -12,12 +12,12 @@ export class appwriteService {
     this.databases = new Databases(this.client);
   }
 
-  async createBlog({ title, slug, content, blogImage, status, userId }) {
+  async createBlog({ title, content, blogImage, status, userId }) {
     try {
       return await this.databases.createDocument(
         conf.appwriteDatabaseID,
         conf.appwriteCollectionID,
-        slug,
+        'unique()',
         {
           title,
           content,
@@ -31,12 +31,12 @@ export class appwriteService {
     }
   }
 
-  async updateBlog(slug, { title, content, blogImage, status }) {
+  async updateBlog(blogId, { title, content, blogImage, status }) {
     try {
       return await this.databases.updateDocument(
         conf.appwriteDatabaseID,
         conf.appwriteCollectionID,
-        slug,
+        blogId,
         {
           title,
           content,
@@ -49,12 +49,12 @@ export class appwriteService {
     }
   }
 
-  async deleteBlog(slug) {
+  async deleteBlog(blogId) {
     try {
       await this.databases.deleteDocument(
         conf.appwriteDatabaseID,
         conf.appwriteCollectionID,
-        slug
+        blogId
       );
       return true;
     } catch (error) {
@@ -63,12 +63,12 @@ export class appwriteService {
     }
   }
 
-  async getBlog(slug) {
+  async getBlog(blogId) {
     try {
       return await this.databases.getDocument(
         conf.appwriteDatabaseID,
         conf.appwriteCollectionID,
-        slug
+        blogId
       );
     } catch (error) {
       console.log("Appwrite service :: getBlog :: error ", error);
