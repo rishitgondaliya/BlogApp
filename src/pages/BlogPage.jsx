@@ -51,6 +51,7 @@ export default function BlogPage() {
   };
 
   // Handlers for navigating between blogs
+  // blogs are in reverse order so logic for next & prev is reversed
   const handleNext = () => {
     setIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : blogs.length - 1));
   };
@@ -96,7 +97,7 @@ export default function BlogPage() {
               onClick={handleNext} />
           </div>
         </div>
-        <div className="w-fit flex justify-center mx-auto mb-4 relative border border-black rounded-xl p-1">
+        <div className="w-fit flex justify-center mx-auto mb-4 relative border border-black rounded-xl p-2">
           {blog.blogImage ? (
             <img
               src={uploadService.getFilePreview(blog.blogImage)}
