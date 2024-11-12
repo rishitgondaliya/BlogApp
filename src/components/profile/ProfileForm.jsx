@@ -30,7 +30,7 @@ const ProfileForm = ({ register, handleSubmit, onSubmit, isEditing, setIsEditing
 
       <Box mt={4} display="flex" justifyContent="center">
         {!isEditing ? (
-          <Box mt={4} display="flex" justifyContent="center">
+          <Box mt={2} display="flex" justifyContent="center">
             <Button
               fontSize={'1rem'}
               onClick={() => setIsEditing(true)}
