@@ -10,8 +10,8 @@ function BlogCard({ $id, title, blogImage }) {
     return (
     <Link to={`/blog/${$id}`}>
       <div className="w-fit mx-auto bg-blue-200 rounded-xl">
-        <div className="w-full max-w-80 justify-center mb-2 px-4 pt-4">
-          <img src={imageUrl} alt={title} className="rounded-xl max-h-52 min-h-44 mx-auto" />
+        <div className="w-full md:max-w-80 sm:max-w-64 justify-center mb-2 md:px-4 sm:px-2 md:pt-4 sm:pt-2">
+          <img src={imageUrl} alt={title} className="rounded-xl md:max-h-52 md:min-h-44 sm:max-h-44 sm:min-h-36 mx-auto" />
         </div>
         <h2 className='text-lg text-black text-center font-bold px-2 pb-2'>{title}</h2>
       </div>
