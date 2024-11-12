@@ -172,9 +172,9 @@ const Profile = () => {
                 try {
                     const response = await appwriteService.getAllBlogs([
                         Query.equal('userId', [userData.$id]) // Pass userId as an array
-                    ]);
-                    console.log("Fetched blogs response:", response);
-                    setUserBlogs(response?.documents || []);
+                    ]); 
+                    const sortedBlogs = response?.documents.sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
+                    setUserBlogs(sortedBlogs || []);
                 } catch (error) {
                     console.error("Failed to fetch user blogs:", error);
                 }
